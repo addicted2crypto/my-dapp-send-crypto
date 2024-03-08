@@ -28,7 +28,7 @@ contract sendMeCrypto {
    address payable owner;
 
 
-    //Deploy Logic only runs once during deployment
+    //Deploy Logic only runs once during deployment with wallet as msg.sender
     constructor() {
         owner = payable(msg.sender);
     }
