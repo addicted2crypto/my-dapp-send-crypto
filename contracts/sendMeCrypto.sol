@@ -61,4 +61,24 @@ contract sendMeCrypto {
 
     }
 
+    
+    /** 
+        * @dev Send the balance from contract to wallet of contract creator(owner).
+        */
+
+    function withdrawCrypto() public {
+       //anyone can call this but it is sent to the creator.
+        require(owner.send(address(this).balance));
+    }
+
+    /** 
+        * @dev Retrieve all memos created and then stored in the memo array on the blockchain.
+        */
+
+
+    function getMemos() public view returns(Memo[] memory){
+        return memos;
+
+    }
+
 }
