@@ -42,7 +42,7 @@ async function main() {
  
   //Deploy the BuyMeCrypto.sol contract
   await BuyMeCrypto.deployed();
-  console.log("BuyMeCrypto deployed to", BuyMeCrypto.address);
+  console.log("BuyMeCrypto deployed to", buyMeCrypto.address);
 
   //Check the balance of the Cypto sent.
   const addresses = [owner.address, tipper.address, BuyMeCrypto.address];
