@@ -8,7 +8,7 @@ const hre = require("hardhat");
 
 // Returns Balance of a given address
 async function getBalance(address) {
-  const balanceBigInt = await hre.waffle.provider.getBalance(address);
+  const balanceBigInt = await hre.ethers.provider.getBalance(address);
   return hre.ethers.utils.formatEther(balanceBigInt);
 }
 
@@ -39,14 +39,14 @@ async function main() {
   //Get the contract to deploy
   const BuyMeCrypto = await hre.ethers.getContractFactory("BuyMeCrypto");
   const buyMeCrypto = await BuyMeCrypto.deploy();
- 
+
   //Deploy the BuyMeCrypto.sol contract
-  await buyMeCrypto.deploy();
- 
-  console.log("BuyMeCrypto deployed to", buyMeCrypto.address);
+  await buyMeCrypto.waitForDeployment();
+  
+  console.log("BuyMeCrypto deployed to:", buyMeCrypto.address);
 
   //Check the balance of the Cypto sent.
-  const addresses = [owner.address, tipper.address, BuyMeCrypto.address];
+  const addresses = [owner.address, tipper.address, buyMeCrypto.address];
   console.log("== start ==");
   await printBalances(addresses);
 
