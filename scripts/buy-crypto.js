@@ -52,9 +52,11 @@ async function main() {
 
 
   //Withdrawl funds.
+ 
 
   //Check the balance after withdraw.
-
+  console.log("== purchased crypto ==")
+  await printBalances(addresses)
   //Read all the memos
   };
 
