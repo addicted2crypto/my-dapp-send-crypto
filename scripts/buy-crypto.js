@@ -41,7 +41,8 @@ async function main() {
   const buyMeCrypto = await BuyMeCrypto.deploy();
  
   //Deploy the BuyMeCrypto.sol contract
-  await BuyMeCrypto.deployed();
+  await buyMeCrypto.deploy();
+ 
   console.log("BuyMeCrypto deployed to", buyMeCrypto.address);
 
   //Check the balance of the Cypto sent.

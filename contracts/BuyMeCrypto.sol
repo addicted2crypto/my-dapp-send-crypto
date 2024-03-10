@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 
 
-contract sendMeCrypto {
+contract BuyMeCrypto {
    // Create an event when a message is written.
    event NewMemo(
     address indexed from,
@@ -39,7 +39,7 @@ contract sendMeCrypto {
         * @param _message The message body from the crypto sender
         */
 
-    function buyMeCrypto(string memory _name, string memory _message) public payable {
+    function buyCrypto(string memory _name, string memory _message) public payable {
         require(msg.value > 0, "Sending 0 is just a message");
 
 
