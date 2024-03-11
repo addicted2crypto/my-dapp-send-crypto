@@ -5,9 +5,11 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+const { buildCustomRoute } = require('next/dist/build');
 
 // Returns Balance of a given address
 async function getBalance(address) {
+  
   const balanceBigInt = await hre.ethers.provider.getBalance(address);
   return hre.ethers.utils.formatEther(balanceBigInt);
 }
@@ -41,8 +43,8 @@ async function main() {
   const buyMeCrypto = await BuyMeCrypto.deploy();
 
   //Deploy the BuyMeCrypto.sol contract
-  await buyMeCrypto.waitForDeployment();
-  
+  await buyMeCrypto.deployed();
+  // console.log(buyMeCrypto.getAddress);
   console.log("BuyMeCrypto deployed to:", buyMeCrypto.address);
 
   //Check the balance of the Cypto sent.
@@ -50,6 +52,9 @@ async function main() {
   console.log("== start ==");
   await printBalances(addresses);
 
+  //Buy-Send the owner some cypto.
+  const tip = {value: hre.ethers.utils.parseEther("1")};
+buyMeCrypto.connect(tipper).buyMeCrypto(",0")
 
   //Withdrawl funds.
  
@@ -58,7 +63,7 @@ async function main() {
   console.log("== purchased crypto ==")
   await printBalances(addresses)
   //Read all the memos
-  };
+  }
 
 
 
