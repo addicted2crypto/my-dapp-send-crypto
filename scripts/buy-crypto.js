@@ -5,20 +5,23 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-const { buildCustomRoute } = require('next/dist/build');
+
 
 // Returns Balance of a given address
 async function getBalance(address) {
-  
   const balanceBigInt = await hre.ethers.provider.getBalance(address);
-  return hre.ethers.utils.formatEther(balanceBigInt);
+  return hre.ethers.formatEther(balanceBigInt);
+ 
 }
 
+
 //Logs the Ether balances for a list of addresses.
-async function printBalances(address) {
-    let idx = 0;
-    console.log(`Address ${idx} balance:`, await getBalance(address));
-    idx++;
+async function printBalances(addresses) {
+  let idx = 0;
+  for (const address of addresses) {
+    console.log(`Address ${idx} balance: `, await getBalance(address));
+    idx ++;
+  }
 }
 
 //Print and log the memos stored on-chain from coffee purchces
@@ -39,29 +42,31 @@ async function main() {
   const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
 
   //Get the contract to deploy
-  const BuyMeCrypto = await hre.ethers.getContractFactory("BuyMeCrypto");
+  const BuyMeCrypto = await ethers.getContractFactory("BuyMeCrypto");
   const buyMeCrypto = await BuyMeCrypto.deploy();
 
   //Deploy the BuyMeCrypto.sol contract
-  await buyMeCrypto.deployed();
-  // console.log(buyMeCrypto.getAddress);
-  console.log("BuyMeCrypto deployed to:", buyMeCrypto.address);
+  await buyMeCrypto.waitForDeployment();
+  
+  console.log("BuyMeCrypto deployed to:", BuyMeCrypto.address);
 
   //Check the balance of the Cypto sent.
   const addresses = [owner.address, tipper.address, buyMeCrypto.address];
   console.log("== start ==");
   await printBalances(addresses);
 
-  //Buy-Send the owner some cypto.
+  //Buy-Send the owner some crypto.
   const tip = {value: hre.ethers.utils.parseEther("1")};
-buyMeCrypto.connect(tipper).buyMeCrypto(",0")
+await buyMeCrypto.connect(tipper).buyMeCrypto("Addicted","You rock!", tip);
+await buyMeCrypto.connect(tipper2).buyMeCrypto("Boss","You ar the boss", tip);
+await buyMeCrypto.connect(tipper3).buyMeCrypto("Coq","Bok Bok!", tip);
 
   //Withdrawl funds.
  
 
   //Check the balance after withdraw.
-  console.log("== purchased crypto ==")
-  await printBalances(addresses)
+  console.log("== purchased crypto ==");
+  await printBalances(addresses);
   //Read all the memos
   }
 
