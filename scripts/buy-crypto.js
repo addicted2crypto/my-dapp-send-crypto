@@ -15,6 +15,7 @@ async function getBalance(address) {
 }
 
 
+
 //Logs the Ether balances for a list of addresses.
 async function printBalances(addresses) {
   let idx = 0;
