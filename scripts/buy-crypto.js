@@ -47,9 +47,9 @@ async function main() {
   const buyMeCrypto = await BuyMeCrypto.deploy();
 
   //Deploy the BuyMeCrypto.sol contract
-  await buyMeCrypto.waitForDeployment();
+  await buyMeCrypto.deployContract();
   
-  console.log("BuyMeCrypto deployed to:", BuyMeCrypto.address);
+  console.log("BuyMeCrypto deployed to:", buyMeCrypto.address);
 
   //Check the balance of the Cypto sent.
   const addresses = [owner.address, tipper.address, buyMeCrypto.address];
@@ -57,7 +57,7 @@ async function main() {
   await printBalances(addresses);
 
   //Buy-Send the owner some crypto.
-  const tip = {value: hre.ethers.utils.parseEther("1")};
+  const tip = {value: hre.ethers.parseEther("1")};
 await buyMeCrypto.connect(tipper).buyMeCrypto("Addicted","You rock!", tip);
 await buyMeCrypto.connect(tipper2).buyMeCrypto("Boss","You ar the boss", tip);
 await buyMeCrypto.connect(tipper3).buyMeCrypto("Coq","Bok Bok!", tip);
