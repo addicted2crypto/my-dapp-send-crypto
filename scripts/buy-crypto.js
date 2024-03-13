@@ -4,7 +4,9 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
+const { ethers } = require('hardhat');
 const hre = require("hardhat");
+
 
 
 // Returns Balance of a given address
@@ -43,11 +45,11 @@ async function main() {
   const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
 
   //Get the contract to deploy
-  const BuyMeCrypto = await ethers.getContractFactory("BuyMeCrypto");
-  const buyMeCrypto = await BuyMeCrypto.deploy();
+  // const BuyMeCrypto = await ethers.getContractFactory("BuyMeCrypto");
+  // const buyMeCrypto = await BuyMeCrypto.deploy();
 
   //Deploy the BuyMeCrypto.sol contract
-  await buyMeCrypto.deployContract();
+  const buyMeCrypto = await ethers.deployContract("BuyMeCrypto");
   
   console.log("BuyMeCrypto deployed to:", buyMeCrypto.address);
 
