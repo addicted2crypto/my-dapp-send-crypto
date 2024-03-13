@@ -62,7 +62,7 @@ async function main() {
   const tip = {value: hre.ethers.parseEther("1")};
 await buyMeCrypto.connect(tipper).buyMeCrypto("Addicted","You rock!", tip);
 await buyMeCrypto.connect(tipper2).buyMeCrypto("Boss","You ar the boss", tip);
-await buyMeCrypto.connect(tipper3).buyMeCrypto("Coq","Bok Bok!", tip);
+await buyMeCrypto.connect(tipper3).buyMeCrypto("Coq","Bok Bok! This passed", tip);
 
   //Withdrawl funds.
  
