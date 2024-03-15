@@ -4,7 +4,7 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
-import "forge-std/Test.sol";
+// import "forge-std/Test.sol";
 
 const { ethers } = require('hardhat');
 const hre = require("hardhat");
@@ -47,13 +47,13 @@ async function main() {
   const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
 
   //Get the contract to deploy
-  // const BuyMeCrypto = await ethers.getContractFactory("BuyMeCrypto");
-  // const buyMeCrypto = await BuyMeCrypto.deploy();
+  const BuyMeCrypto = await ethers.getContractFactory("BuyMeCrypto");
+ 
 
   //Deploy the BuyMeCrypto.sol contract
   const buyMeCrypto = await ethers.deployContract("BuyMeCrypto");
   
-  console.log("BuyMeCrypto deployed to:", buyMeCrypto.address);
+  console.log(`BuyMeCrypto deployed to: ${buyMeCrypto.address}`);
 
   //Check the balance of the Cypto sent.
   const addresses = [owner.address, tipper.address, buyMeCrypto.address];
@@ -67,7 +67,7 @@ await buyMeCrypto.connect(tipper2).buyMeCrypto("Boss","You ar the boss", tip);
 await buyMeCrypto.connect(tipper3).buyMeCrypto("Coq","Bok Bok! This passed", tip);
 
   //Withdrawl funds.
- 
+ await buyMeCrypto.connect(owner).withDrawTips();
 
   //Check the balance after withdraw.
   console.log("== purchased crypto ==");
